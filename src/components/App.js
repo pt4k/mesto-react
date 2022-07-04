@@ -11,7 +11,7 @@ function App() {
     const [onEditProfile, setOpenEditProfile] = React.useState(false);
     const [onAddPlace, setOpenAddPlace] = React.useState(false);
     const [onDeleteCard, setOpenDeleteCard] = React.useState(false);
-    const [selectedCard, setSelectedCard] = React.useState(false);
+    const [selectedCard, setSelectedCard] = React.useState({name: '', link: ''});
 
     const isEditAvatarPopupOpen = () => { setOpenEditAvatar(true) };
     const isEditProfilePopupOpen = () => { setOpenEditProfile(true) };
@@ -24,7 +24,7 @@ function App() {
         setOpenEditProfile(false);
         setOpenAddPlace(false);
         setOpenDeleteCard(false);
-        setSelectedCard(false);
+        setSelectedCard({name: '', link: ''});
     }
 
     return (
@@ -47,9 +47,9 @@ function App() {
                 <>
                 <input className="popup__input popup__input_el_avatar" type="text" name="avatar" placeholder="Аватар" minLength="2" maxLength="200" required />
                 <span className="popup__input-error avatar-input-error"></span>
-                <button className="popup__save-button" type="submit">Сохранить</button>
                 </>
-            } />
+            }
+            buttonText={'Сохранить'} />
 
         <PopupWithForm 
             isOpen={onEditProfile}
@@ -62,9 +62,9 @@ function App() {
                 <span className="popup__input-error firstname-input-error"></span>
                 <input className="popup__input popup__input_el_about" type="text" name="about" placeholder="О себе" minLength="2" maxLength="200" required />
                 <span className="popup__input-error about-input-error"></span>
-                <button className="popup__save-button" type="submit">Сохранить</button>
                 </>
-            } />
+            }
+            buttonText={'Сохранить'} />
 
        <PopupWithForm 
             isOpen={onAddPlace}
@@ -77,20 +77,16 @@ function App() {
                 <span className="popup__input-error name-input-error"></span>
                 <input className="popup__input popup__input_el_link" type="url" name="link" placeholder="Ссылка на картинку" required />
                 <span className="popup__input-error link-input-error"></span>
-                <button className="popup__save-button" type="submit">Сохранить</button>
                 </>
-            } />
+            }
+            buttonText={'Сохранить'} />
         
         <PopupWithForm 
             isOpen={onDeleteCard}
             onClose={closeAllPopups} 
             name={'delete-card'} 
             title={'Вы уверены?'}
-            children={
-                <>
-                <button className="popup__save-button" type="submit">Да</button>
-                </>
-            } />
+            buttonText={'Да'} />
 
          <ImagePopup 
          card={selectedCard}
