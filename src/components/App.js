@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import Header from "./Header";
-import Main from "./Main";
-import PopupWithForm from "./PopupWithForm";
-import EditProfilePopup from "./EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup";
-import AddPlacePopup from "./AddPlacePopup";
-import ImagePopup from "./ImagePopup";
-import Footer from "./Footer";
-import api from "../utils/api";
+import { useState, useEffect } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import Header from './Header';
+import Main from './Main';
+import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+import ImagePopup from './ImagePopup';
+import Footer from './Footer';
+import api from '../utils/api';
 
 function App() {
   const [isEditAvatarPopupOpen, setOpenEditAvatar] = useState(false);
   const [isEditProfilePopupOpen, setOpenEditProfile] = useState(false);
   const [isAddPlacePopupOpen, setOpenAddPlace] = useState(false);
   const [isDeleteCardPopupOpen, setOpenDeleteCard] = useState(false);
-  const [selectedCard, setSelectedCard] = useState({ name: "", link: "" });
+  const [selectedCard, setSelectedCard] = useState({ name: '', link: '' });
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
 
@@ -40,7 +40,7 @@ function App() {
     setOpenEditProfile(false);
     setOpenAddPlace(false);
     setOpenDeleteCard(false);
-    setSelectedCard({ name: "", link: "" });
+    setSelectedCard({ name: '', link: '' });
   };
 
   useEffect(() => {
@@ -119,7 +119,7 @@ function App() {
   }
 
   return (
-    <div className="page">
+    <div>
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
 
