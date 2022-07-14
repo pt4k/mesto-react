@@ -1,5 +1,5 @@
-import { useRef, useEffect } from "react";
-import PopupWithForm from "./PopupWithForm";
+import { useRef, useEffect } from 'react';
+import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({ isOpen, onClose, onAddCard }) {
   const placeRef = useRef();
@@ -15,8 +15,8 @@ function AddPlacePopup({ isOpen, onClose, onAddCard }) {
   }
 
   useEffect(() => {
-    placeRef.current.value = "";
-    linkRef.current.value = "";
+    placeRef.current.value = '';
+    linkRef.current.value = '';
   }, [isOpen]);
 
   return (

@@ -2,7 +2,7 @@ function ImagePopup({ card, onClose }) {
   return (
     <div
       className={`popup popup_type_view-card ${
-        card.link ? "popup_opened" : ""
+        card.link ? 'popup_opened' : ''
       }`}
     >
       <div className="popup__window popup__window_view-card">

@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = useContext(CurrentUserContext);
@@ -12,10 +12,10 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
   // Создаём переменную, которую после зададим в `className` для кнопки удаления и кнопки лайк
   const cardDeleteButtonClassName = `element__button-delete ${
-    isOwn ? "element__button-delete_visible" : "element__button-delete_hidden"
+    isOwn ? 'element__button-delete_visible' : 'element__button-delete_hidden'
   }`;
   const cardLikeButtonClassName = `element__button-like ${
-    isLiked ? "element__button-like_active" : ""
+    isLiked ? 'element__button-like_active' : ''
   }`;
 
   function handleSelectedCardClick() {

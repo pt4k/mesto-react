@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Header from './Header';
 import Main from './Main';
-import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import DeleteCardPopup from './DeleteCardPopup';
 import ImagePopup from './ImagePopup';
 import Footer from './Footer';
 import api from '../utils/api';
@@ -16,6 +16,7 @@ function App() {
   const [isAddPlacePopupOpen, setOpenAddPlace] = useState(false);
   const [isDeleteCardPopupOpen, setOpenDeleteCard] = useState(false);
   const [selectedCard, setSelectedCard] = useState({ name: '', link: '' });
+  const [deletionСard, setDeletionCard] = useState({ name: '', link: '' });
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
 
@@ -28,8 +29,9 @@ function App() {
   const handleAddCard = () => {
     setOpenAddPlace(true);
   };
-  const handleDeleteCard = () => {
+  const handleDeleteCard = (card) => {
     setOpenDeleteCard(true);
+    setDeletionCard(card);
   };
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -41,6 +43,7 @@ function App() {
     setOpenAddPlace(false);
     setOpenDeleteCard(false);
     setSelectedCard({ name: '', link: '' });
+    setDeletionCard({ name: '', link: '' });
   };
 
   useEffect(() => {
@@ -89,6 +92,18 @@ function App() {
       });
   }
 
+  function handleAddPlaceSubmit(newCard) {
+    api
+      .addNewCard(newCard)
+      .then((res) => {
+        setCards([res, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -104,18 +119,7 @@ function App() {
     api.deleteCard(card._id).then(() => {
       setCards((cards) => cards.filter((c) => c._id !== card._id));
     });
-  }
-
-  function handleAddPlaceSubmit(newCard) {
-    api
-      .addNewCard(newCard)
-      .then((res) => {
-        setCards([res, ...cards]);
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    closeAllPopups();
   }
 
   return (
@@ -127,10 +131,9 @@ function App() {
           onEditAvatar={handleEditAvatar}
           onEditProfile={handleEditProfile}
           onAddPlace={handleAddCard}
-          onDeleteCard={handleDeleteCard}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardDelete={handleDeleteCard}
           cards={cards}
         />
 
@@ -152,12 +155,11 @@ function App() {
           onAddCard={handleAddPlaceSubmit}
         />
 
-        <PopupWithForm
+        <DeleteCardPopup
           isOpen={isDeleteCardPopupOpen}
           onClose={closeAllPopups}
-          name="delete-card"
-          title="Вы уверены?"
-          buttonText="Да"
+          card={deletionСard}
+          onDeleteCard={handleCardDelete}
         />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />

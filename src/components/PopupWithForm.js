@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 function PopupWithForm({
   name,
   isOpen,
@@ -8,7 +10,7 @@ function PopupWithForm({
   buttonText,
 }) {
   return (
-    <div className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}>
+    <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__window">
         <h2 className="popup__title">{title}</h2>
         <button
