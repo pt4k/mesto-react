@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import Loader from './Loader';
 
 function PopupWithForm({
   name,
@@ -8,6 +8,8 @@ function PopupWithForm({
   onSubmit,
   children,
   buttonText,
+  isLoading,
+  loadingText,
 }) {
   return (
     <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
@@ -26,9 +28,13 @@ function PopupWithForm({
           onSubmit={onSubmit}
         >
           {children}
-          <button className="popup__save-button" type="submit">
-            {buttonText}
-          </button>
+          {isLoading ? (
+            <Loader loadingText={loadingText} />
+          ) : (
+            <button className="popup__save-button" type="submit">
+              {buttonText}
+            </button>
+          )}
         </form>
       </div>
     </div>

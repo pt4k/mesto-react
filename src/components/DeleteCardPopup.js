@@ -1,6 +1,6 @@
 import PopupWithForm from './PopupWithForm';
 
-function DeleteCardPopup({ isOpen, onClose, card, onDeleteCard }) {
+function DeleteCardPopup({ isOpen, onClose, card, isLoad, onDeleteCard }) {
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -11,6 +11,8 @@ function DeleteCardPopup({ isOpen, onClose, card, onDeleteCard }) {
     <PopupWithForm
       isOpen={isOpen}
       onClose={onClose}
+      isLoading={isLoad}
+      loadingText="Удаление..."
       onSubmit={handleSubmit}
       name="delete-card"
       title="Вы уверены?"

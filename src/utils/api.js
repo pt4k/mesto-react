@@ -49,19 +49,19 @@ class Api {
   }
 
   //редактирование данных профайла
-  patchUserInfo(userInfo) {
+  sethUserInfo(userInfo) {
     return fetch(this._baseUrl + '/users/me', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: userInfo.firstname,
+        name: userInfo.name,
         about: userInfo.about,
       }),
     }).then(this._handleResponse);
   }
 
   //редактирование аватара
-  pathUserAvatar(userInfo) {
+  setUserAvatar(userInfo) {
     return fetch(this._baseUrl + '/users/me/avatar', {
       method: 'PATCH',
       headers: this._headers,
@@ -71,18 +71,9 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  //поставить лайк
-  handleLikeCard(cardId) {
+  changeLikeCardStatus(cardId, isLiked) {
     return fetch(this._baseUrl + '/cards/likes/' + `${cardId}`, {
-      method: 'PUT',
-      headers: this._headers,
-    }).then(this._handleResponse);
-  }
-
-  //убрать лайк
-  handleDislikeCard(cardId) {
-    return fetch(this._baseUrl + '/cards/likes/' + `${cardId}`, {
-      method: 'DELETE',
+      method: `${isLiked ? 'PUT' : 'DELETE'}`,
       headers: this._headers,
     }).then(this._handleResponse);
   }

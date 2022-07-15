@@ -19,6 +19,7 @@ function App() {
   const [deletionСard, setDeletionCard] = useState({ name: '', link: '' });
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEditAvatar = () => {
     setOpenEditAvatar(true);
@@ -44,6 +45,7 @@ function App() {
     setOpenDeleteCard(false);
     setSelectedCard({ name: '', link: '' });
     setDeletionCard({ name: '', link: '' });
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -69,8 +71,9 @@ function App() {
   }, []);
 
   function handleUpdateUser(newInfo) {
+    setIsLoading(true);
     api
-      .setUserInfo(newInfo)
+      .sethUserInfo(newInfo)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -81,6 +84,7 @@ function App() {
   }
 
   function handleUpdateAvatar(newInfo) {
+    setIsLoading(true);
     api
       .setUserAvatar(newInfo)
       .then((res) => {
@@ -93,6 +97,7 @@ function App() {
   }
 
   function handleAddPlaceSubmit(newCard) {
+    setIsLoading(true);
     api
       .addNewCard(newCard)
       .then((res) => {
@@ -115,11 +120,16 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.deleteCard(card._id).then(() => {
-      setCards((cards) => cards.filter((c) => c._id !== card._id));
-    });
-    closeAllPopups();
+    setIsLoading(true);
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        setCards((cards) => cards.filter((c) => c._id !== card._id));
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -139,26 +149,30 @@ function App() {
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
+          isLoad={isLoading}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
         />
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
+          isLoad={isLoading}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
+          isLoad={isLoading}
           onClose={closeAllPopups}
           onAddCard={handleAddPlaceSubmit}
         />
 
         <DeleteCardPopup
           isOpen={isDeleteCardPopupOpen}
-          onClose={closeAllPopups}
+          isLoad={isLoading}
           card={deletionСard}
+          onClose={closeAllPopups}
           onDeleteCard={handleCardDelete}
         />
 
